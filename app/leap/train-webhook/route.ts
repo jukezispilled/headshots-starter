@@ -133,9 +133,9 @@ export async function POST(request: Request) {
         console.error({ modelUpdatedError });
         return NextResponse.json(
           {
-            message: "Something went wrong!",
+            message: "Something went wrong! Model Update Error",
           },
-          { status: 500, statusText: "Something went wrong!" }
+          { status: 500, statusText: "Something went wrong! Model Update Error" }
         );
       }
 
@@ -203,9 +203,9 @@ export async function POST(request: Request) {
           console.error({ updateCreditError });
           return NextResponse.json(
             {
-              message: "Something went wrong!",
+              message: "Something went wrong! Update Credit Error",
             },
-            { status: 500, statusText: "Something went wrong!" }
+            { status: 500, statusText: "Something went wrong! Update Credit Error" }
           );
         }
 
@@ -222,9 +222,9 @@ export async function POST(request: Request) {
     console.error(e);
     return NextResponse.json(
       {
-        message: "Something went wrong!",
+        message: "Something went wrong! I don't even know",
       },
-      { status: 500, statusText: "Something went wrong!" }
+      { status: 500, statusText: "Something went wrong! I don't even know" }
     );
   }
 }

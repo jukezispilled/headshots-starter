@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       console.error({ creditError });
       return NextResponse.json(
         {
-          message: "Something went wrong!",
+          message: "Something went wrong! Error fetching credits",
         },
         { status: 500, statusText: "Something went wrong! Error fetching credits" }
       );
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
         console.error({ errorCreatingCredits });
         return NextResponse.json(
           {
-            message: "Something went wrong!",
+            message: "Something went wrong! Error creating credits",
           },
           { status: 500, statusText: "Something went wrong! Error creating credits" }
         );
@@ -108,7 +108,7 @@ export async function POST(request: Request) {
         console.error({ updateCreditError });
         return NextResponse.json(
           {
-            message: "Something went wrong!",
+            message: "Something went wrong! Error updating credits",
           },
           { status: 500, statusText: "Something went wrong! Error updating credits" }
         );
@@ -170,7 +170,7 @@ export async function POST(request: Request) {
       console.error(modelError);
       return NextResponse.json(
         {
-          message: "Something went wrong!",
+          message: "Something went wrong! Models Error",
         },
         { status: 500, statusText: "Something went wrong! Models Error" }
       );
@@ -187,7 +187,7 @@ export async function POST(request: Request) {
       console.error(samplesError);
       return NextResponse.json(
         {
-          message: "Something went wrong!",
+          message: "Something went wrong!Samples Error",
         },
         { status: 500, statusText: "Something went wrong! Samples Error" }
       );
@@ -196,7 +196,7 @@ export async function POST(request: Request) {
     console.error(e);
     return NextResponse.json(
       {
-        message: "Something went wrong!",
+        message: "Something went wrong! Samples Error",
       },
       { status: 500, statusText: "Something went wrong! Samples Error" }
     );

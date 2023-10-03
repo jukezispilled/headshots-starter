@@ -128,9 +128,9 @@ export async function POST(request: Request) {
     console.error(e);
     return NextResponse.json(
       {
-        message: "Something went wrong!",
+        message: "Something went wrong! I don't know",
       },
-      { status: 500, statusText: "Something went wrong!" }
+      { status: 500, statusText: "Something went wrong! I don't know" }
     );
   }
 }
