@@ -187,7 +187,7 @@ export async function POST(request: Request) {
       console.error(samplesError);
       return NextResponse.json(
         {
-          message: "Something went wrong!Samples Error",
+          message: "Something went wrong! Samples Error",
         },
         { status: 500, statusText: "Something went wrong! Samples Error" }
       );
