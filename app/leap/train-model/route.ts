@@ -59,7 +59,7 @@ export async function POST(request: Request) {
         {
           message: "Something went wrong!",
         },
-        { status: 500, statusText: "Something went wrong!" }
+        { status: 500, statusText: "Something went wrong! Error fetching credits" }
       );
     }
 
@@ -76,7 +76,7 @@ export async function POST(request: Request) {
           {
             message: "Something went wrong!",
           },
-          { status: 500, statusText: "Something went wrong!" }
+          { status: 500, statusText: "Something went wrong! Error creating credits" }
         );
       }
 
@@ -110,7 +110,7 @@ export async function POST(request: Request) {
           {
             message: "Something went wrong!",
           },
-          { status: 500, statusText: "Something went wrong!" }
+          { status: 500, statusText: "Something went wrong! Error updating credits" }
         );
       }
     }
