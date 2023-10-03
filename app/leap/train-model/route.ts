@@ -172,7 +172,7 @@ export async function POST(request: Request) {
         {
           message: "Something went wrong!",
         },
-        { status: 500, statusText: "Something went wrong!" }
+        { status: 500, statusText: "Something went wrong! Models Error" }
       );
     }
 
@@ -189,7 +189,7 @@ export async function POST(request: Request) {
         {
           message: "Something went wrong!",
         },
-        { status: 500, statusText: "Something went wrong!" }
+        { status: 500, statusText: "Something went wrong! Samples Error" }
       );
     }
   } catch (e) {
@@ -198,7 +198,7 @@ export async function POST(request: Request) {
       {
         message: "Something went wrong!",
       },
-      { status: 500, statusText: "Something went wrong!" }
+      { status: 500, statusText: "Something went wrong! Samples Error" }
     );
   }
 
