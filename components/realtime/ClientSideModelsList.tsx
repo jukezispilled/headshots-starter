@@ -74,11 +74,11 @@ export default function ClientSideModelsList({
         <div className="flex flex-col gap-4 items-center">
           <FaImages size={64} className="text-gray-500" />
           <h1 className="text-2xl">
-            Get started by training your first model.
+            Start you shoot!
           </h1>
           <div>
             <Link href="/overview/models/train">
-              <Button size={"lg"}>Train model</Button>
+              <Button size={"lg"}>Magic time</Button>
             </Link>
           </div>
         </div>

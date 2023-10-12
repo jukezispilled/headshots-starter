@@ -1,5 +1,6 @@
 "use client";
 
+import imageCompression from 'browser-image-compression';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -47,13 +48,17 @@ export default function TrainModelZone() {
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      const newFiles: File[] =
-        acceptedFiles.filter(
-          (file: File) => !files.some((f) => f.name === file.name)
-        ) || [];
-
+      // Check for duplicate files and compress each file asynchronously
+      const uniqueCompressedFiles: File[] = [];
+      for (const file of acceptedFiles) {
+        const compressedFile = await compressImage(file);
+        if (!files.some((f) => f.name === file.name)) {
+          uniqueCompressedFiles.push(compressedFile);
+        }
+      }
+  
       // if user tries to upload more than 10 files, display a toast
-      if (newFiles.length + files.length > 10) {
+      if (uniqueCompressedFiles.length + files.length > 10) {
         toast({
           title: "Too many images",
           description:
@@ -62,9 +67,9 @@ export default function TrainModelZone() {
         });
         return;
       }
-
+  
       // display a toast if any duplicate files were found
-      if (newFiles.length !== acceptedFiles.length) {
+      if (uniqueCompressedFiles.length !== acceptedFiles.length) {
         toast({
           title: "Duplicate file names",
           description:
@@ -72,11 +77,14 @@ export default function TrainModelZone() {
           duration: 5000,
         });
       }
-
+  
       // check that in total images do not exceed a combined 4.5MB
       const totalSize = files.reduce((acc, file) => acc + file.size, 0);
-      const newSize = newFiles.reduce((acc, file) => acc + file.size, 0);
-
+      const newSize = uniqueCompressedFiles.reduce(
+        (acc, file) => acc + file.size,
+        0
+      );
+  
       if (totalSize + newSize > 4.5 * 1024 * 1024) {
         toast({
           title: "Images exceed size limit",
@@ -86,9 +94,10 @@ export default function TrainModelZone() {
         });
         return;
       }
-
-      setFiles([...files, ...newFiles]);
-
+  
+      // Append the compressed files to the state
+      setFiles([...files, ...uniqueCompressedFiles]);
+  
       toast({
         title: "Images selected",
         description: "The images were successfully selected.",
@@ -96,7 +105,7 @@ export default function TrainModelZone() {
       });
     },
     [files]
-  );
+  );  
 
   const removeFile = useCallback(
     (file: File) => {
@@ -105,10 +114,37 @@ export default function TrainModelZone() {
     [files]
   );
 
+  const compressImage = async (file: File) => {
+    try {
+      const maxSizeMB = 1; // Set your desired maximum file size in megabytes
+      const maxWidthOrHeight = 1920; // Set your desired maximum width or height
+  
+      const originalSizeMB = file.size / (1024 * 1024); // Convert original size to megabytes
+  
+      const compressedFile = await imageCompression(file, {
+        maxSizeMB: maxSizeMB,
+        maxWidthOrHeight: maxWidthOrHeight,
+      });
+  
+      const compressedSizeMB = compressedFile.size / (1024 * 1024); // Convert compressed size to megabytes
+      const reductionPercentage = ((originalSizeMB - compressedSizeMB) / originalSizeMB) * 100;
+  
+      console.log(
+        `Original size: ${originalSizeMB.toFixed(2)} MB, Compressed size: ${compressedSizeMB.toFixed(2)} MB, Reduction: ${reductionPercentage.toFixed(2)}%`
+      );
+  
+      return compressedFile;
+    } catch (error) {
+      console.error('Error compressing image:', error);
+      return file; // Return the original file if compression fails
+    }
+  };  
+
   const trainModel = useCallback(async () => {
     setIsLoading(true);
     const formData = new FormData();
-    files?.forEach((file) => {
+    files?.forEach(async (file) => {
+      //const compressedImage = await compressImage(file);
       formData.append("image", file); // Add the image Blob to the form data
     });
     formData.append("name", form.getValues("name").trim());

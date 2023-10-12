@@ -1,4 +1,6 @@
 import Login from "../login/page";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
@@ -19,5 +21,12 @@ export default async function RootLayout({
     return <Login />;
   }
 
-  return <div className="flex w-full flex-col px-4 lg:px-40">{children}</div>;
+  return (
+    <div className="absolute w-[100.01%] overflow-x-clip">
+      <div className="relative top-0 inset-0">
+        <Navbar />
+      </div>
+      <div className="flex items-center w-full flex-col px-4 pt-7 lg:pt-10 lg:px-40">{children}</div>
+    </div>
+  )
 }
